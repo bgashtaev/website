@@ -1,0 +1,422 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Quiz</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Include your shared stylesheet -->
+    <style>
+        body {
+            background-color: #000; /* Black background for the whole page */
+            color: #fff; /* White text color */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #e91e63; /* Pink background for the header */
+        }
+
+        .quiz-container {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #212121; /* Dark gray background for the quiz container */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .tab-button {
+            background-color: #e91e63; /* Pink background for buttons */
+            color: #fff; /* White text color for buttons */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 5px;
+        }
+
+        .tab-button:hover {
+            background-color: #d81b60; /* Darker pink on hover */
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .tab-content {
+            margin-top: 20px;
+            background-color: #333; /* Dark background for tab content */
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .options label {
+            display: block;
+            margin: 10px 0;
+            font-size: 18px;
+            color: #fff; /* White text for options */
+        }
+
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        /* Cloud popup styles */
+        .popup {
+            position: absolute;
+            display: none;
+            background: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            width: auto;
+            max-width: 300px;
+            text-align: center;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            border: 2px solid #e91e63;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .popup-left {
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .popup-right {
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Cloud shape */
+        .cloud {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .cloud.left {
+            top: -20px;
+            left: -20px;
+            width: 80px;
+            height: 80px;
+        }
+
+        .cloud.left::before {
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+        }
+
+        .cloud.left::after {
+            top: -20px;
+            left: 40px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .cloud.right {
+            bottom: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+        }
+
+        .cloud.right::before {
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+        }
+
+        .cloud.right::after {
+            bottom: -20px;
+            right: 40px;
+            width: 40px;
+            height: 40px;
+        }
+
+        @keyframes slideInLeft {
+         0% {
+       transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+        .show-popup-left {
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .show-popup-right {
+            animation: slideInRight 1s ease-out;
+        }
+
+        /* Loading screen styles */
+        #loadingScreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        z-index: 9999;
+        }
+
+        .heart {
+        font-size: 4rem; /* Adjust size as needed */
+        color: #ff4d4d;
+        animation: pulse 1.5s infinite;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center content horizontally */
+        }
+
+        .loading-text {
+        font-size: 1.5rem;
+        margin-top: 20px;
+        color: #ff4d4d;
+        text-align: center; /* Center text horizontally */
+        }
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+        .loading-text {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: #ff4d4d;
+        }
+
+        #loadingScreen .additional-text {
+    font-size: 16px;
+    color: #ff69b4;
+    text-align: center;
+    margin-top: 10px;
+}
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading screen -->
+    <div id="loadingScreen">
+        <div>
+            <div class="heart">❤️</div>
+            <div class="loading-text">Love info is loading...</div>
+            <div class="additional-text">Небольшая викторина</div>
+        </div>
+    </div>
+
+    <header>
+        <h1>Fun Quiz!</h1>
+        <p>Нажми сначала на Q1,а затем на остальные. так будет удобнее.</p>
+        <p>Как пройдешь, можешь закрыть окно и вернуться на главную страницу к next кнпоке</p>
+    </header>
+    <div class="quiz-container">
+        <div class="tabs">
+            <button class="tab-button" onclick="openTab('tab1')">Question 1</button>
+            <button class="tab-button" onclick="openTab('tab2')">Question 2</button>
+            <button class="tab-button" onclick="openTab('tab3')">Question 3</button>
+            <button class="tab-button" onclick="goBackToMain()">Back to Main Page</button>
+        </div>
+
+        <!-- Tab 1 -->
+        <div id="tab1" class="tab-content">
+            <p>Сколько раз мы друг другу написали “Выйди в окно”?</p>
+            <img src="window.jpg" alt="Main Image 1">
+            <div class="options">
+                <label><input type="radio" name="q1" value="A" onclick="showAnswer('answer1')"> 20 раз</label>
+                <label><input type="radio" name="q1" value="B" onclick="showAnswer('answer1')"> 22 раза</label>
+                <label><input type="radio" name="q1" value="C" onclick="showAnswer('answer1')"> 26 раз</label>
+                <label><input type="radio" name="q1" value="D" onclick="showAnswer('answer1')"> 30 раз</label>
+            </div>
+            <div id="answer1" class="hidden">
+                <p>Правильный ответ: 26 раз вместе.</p>
+                <p>Как думаешь кто чаще использовал?</p>
+                <div class="options">
+                    <label><input type="radio" name="q1_sub" value="Basang" onclick="showSubAnswer('subAnswer1')"> Басан</label>
+                    <label><input type="radio" name="q1_sub" value="Madina" onclick="showSubAnswer('subAnswer1')"> Мадина</label>
+                </div>
+            </div>
+            <div id="subAnswer1" class="hidden">
+                <p>Ответ: 16 раз Басан, 10 раз Мадина.</p>
+                <div class="sub-question">
+                    <img src="us.jpg" alt="Sub-question Image 1">
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2 -->
+        <div id="tab2" class="tab-content">
+            <p>Сколько раз мы друг другу написали “Иди в хрюшку”?</p>
+            <img src="pig.jpg" alt="Main Image 2">
+            <div class="options">
+                <label><input type="radio" name="q2" value="A" onclick="showAnswer('answer2')"> 15 раз</label>
+                <label><input type="radio" name="q2" value="B" onclick="showAnswer('answer2')"> 17 раз</label>
+                <label><input type="radio" name="q2" value="C" onclick="showAnswer('answer2')"> 20 раз</label>
+                <label><input type="radio" name="q2" value="D" onclick="showAnswer('answer2')"> 22 раза</label>
+            </div>
+            <div id="answer2" class="hidden">
+                <p>Правильный ответ: 17 раз вместе.</p>
+                <p>Как думаешь кто чаще использовал?</p>
+                <div class="options">
+                    <label><input type="radio" name="q2_sub" value="Basang" onclick="showSubAnswer('subAnswer2')"> Басан</label>
+                    <label><input type="radio" name="q2_sub" value="Madina" onclick="showSubAnswer('subAnswer2')"> Мадина</label>
+                </div>
+            </div>
+            <div id="subAnswer2" class="hidden">
+                <p>Ответ: 8 раз Басан, 9 раз Мадина.</p>
+                <div class="sub-question">
+                    <img src="us.jpg" alt="Sub-question Image 2">
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3 -->
+        <div id="tab3" class="tab-content">
+            <p>Сколько раз мы использовали слово “канава” в сообщениях друг другу?</p>
+            <img src="canava.jpg" alt="Main Image 3">
+            <div class="options">
+                <label><input type="radio" name="q3" value="A" onclick="showAnswer('answer3')"> 24 раза</label>
+                <label><input type="radio" name="q3" value="B" onclick="showAnswer('answer3')"> 26 раз</label>
+                <label><input type="radio" name="q3" value="C" onclick="showAnswer('answer3')"> 28 раз</label>
+                <label><input type="radio" name="q3" value="D" onclick="showAnswer('answer3')"> 30 раз</label>
+            </div>
+            <div id="answer3" class="hidden">
+                <p>Правильный ответ: 26 раз вместе.</p>
+                <p>Как думаешь кто чаще использовал?</p>
+                <div class="options">
+                    <label><input type="radio" name="q3_sub" value="Basang" onclick="showSubAnswer('subAnswer3')"> Басан</label>
+                    <label><input type="radio" name="q3_sub" value="Madina" onclick="showSubAnswer('subAnswer3')"> Мадина</label>
+                </div>
+            </div>
+            <div id="subAnswer3" class="hidden">
+                <p>Ответ: 20 раз Басан, 6 раз Мадина.</p>
+                <div class="sub-question">
+                    <img src="us.jpg" alt="Sub-question Image 3">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Function to open a specific tab
+        function openTab(tabId) {
+            var tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(function(tab) {
+                tab.style.display = 'none';
+            });
+            document.getElementById(tabId).style.display = 'block';
+        }
+
+        // Function to show an answer
+        function showAnswer(answerId) {
+            document.getElementById(answerId).style.display = 'block';
+        }
+
+        // Function to show a sub-answer
+        function showSubAnswer(subAnswerId) {
+            document.getElementById(subAnswerId).style.display = 'block';
+        }
+
+        // Hide loading screen after 3 seconds
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loadingScreen').style.display = 'none';
+            }, 3000); // Change this value to adjust the duration of the loading screen
+        });
+    </script>
+    <!-- Interesting Facts Popups -->
+    <div id="popupLeft" class="popup popup-left">
+        <p>Факт1:Мы написали в вк друг другу "Я тебя люблю" 494 разa</p>
+    </div>
+    <div id="popupRight" class="popup popup-right">
+        <p>Факт2:Мы использовали "Епта" больше 600 раз</p>
+    </div>
+</div>
+
+<script>
+        // JavaScript to handle showing popups
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loadingScreen').style.display = 'none';
+                // Show popups after 3 seconds
+                setTimeout(function() {
+                    document.getElementById('popupLeft').style.display = 'block';
+                    document.getElementById('popupLeft').classList.add('show-popup-left');
+                    
+                    document.getElementById('popupRight').style.display = 'block';
+                    document.getElementById('popupRight').classList.add('show-popup-right');
+                }, 3000); // 3 seconds delay
+            }, 3000); // 3 seconds
+        });
+
+        function goBackToMain() {
+        // Redirects to the main page without showing the loading screen
+        window.location.href = 'thankyou.html'; 
+    }
+</script>
+</body>
+</html>
+

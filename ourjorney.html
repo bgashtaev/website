@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Journey</title>
+    <style>
+        body, html {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffebcc; /* Light background color */
+            color: #333;
+        }
+        .timeline {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .timeline-item .timeline-date {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff4d4d;
+            margin-bottom: 10px;
+        }
+
+        .timeline-item .timeline-content {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-item img, .timeline-item video {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #ff4d4d;
+            z-index: -1;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center; /* Optional: Centers images horizontally */
+        }
+
+        .image {
+            width: 45%; /* Adjust the width as needed */
+            margin: 10px; /* Space between images */
+        }
+
+        .tab-button {
+            background-color: #e91e63; /* Pink background for buttons */
+            color: #fff; /* White text color for buttons */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 5px;
+        }
+
+        .tab-button:hover {
+            background-color: #d81b60; /* Darker pink on hover */
+        }
+
+                /* Loading screen styles */
+                #loadingScreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        z-index: 9999;
+        }
+
+        .heart {
+        font-size: 4rem; /* Adjust size as needed */
+        color: #ff4d4d;
+        animation: pulse 1.5s infinite;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center content horizontally */
+        }
+
+.loading-text {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    color: #ff4d4d;
+    text-align: center; /* Center text horizontally */
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+        .loading-text {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: #ff4d4d;
+        }
+
+        #loadingScreen .additional-text {
+    font-size: 16px;
+    color: #ff69b4;
+    text-align: center;
+    margin-top: 10px;
+}
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingScreen">
+        <div>
+            <div class="heart">❤️</div>
+            <div class="loading-text">Date info is loading...</div>
+            <div class="additional-text">Некоторые наши даты</div>
+        </div>
+    </div>
+
+    <div class="timeline">
+        <div class="timeline-line"></div>
+        
+        <!-- First Date with Picture and Video -->
+        <div class="timeline-item">
+            <div class="timeline-date">26 Апреля 2021 </div>
+            <div class="timeline-content">
+                <p>Начало нашей переписки</p>
+                
+                <!-- Image -->
+                <img src="date1.jpg" alt="First Date">
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">1 Сентября 2022</div>
+            <div class="timeline-content">
+                <p>Первая попытка о признании чувств </p>
+                <img src="firsttry.jpg" alt="Christmas">
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">20 Сентября 2022</div>
+            <div class="timeline-content">
+                <p>Первое наше свидание </p>
+                <img src="1stdate.jpg" alt="Christmas">
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">21 Сентября 2022</div>
+            <div class="timeline-content">
+                <p>Первый мой любовный текст тебе </p>
+                <img src="1stloveletter.jpg" alt="Christmas">
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">24 Сентября 2022</div>
+            <div class="timeline-content">
+                <p>Мой самый любимый адрес </p>
+                <img src="24.jpg" alt="Christmas">
+            </div>
+        </div>
+
+        <!-- Example of another timeline event -->
+        <div class="timeline-item">
+            <div class="timeline-date">23 Сентября 2022</div>
+            <div class="timeline-content">
+                <p>Мы начали встречаться</p>
+                <img src="anniversary.jpg" alt="Mountain Trip">
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">22 Октября 2022</div>
+            <div class="timeline-content">
+                <p>Я попытался украсить стену</p>
+                <img src="letters.jpg" alt="Mountain Trip">
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">2 Января 2023</div>
+            <div class="timeline-content">
+                <p>Я благодaря тебе узнал о моей родинке на ухе</p>
+                <img src="rodinka.jpg" alt="Christmas">
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">5 Января 2023</div>
+            <div class="timeline-content">
+                <p>Мы зарегистрировали наш брак онлайн</p>
+                <img src="photo15.jpg" alt="Christmas">
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">3 Марта 2023</div>
+            <div class="timeline-content">
+                <p>Мой самый лучший день рождения</p>
+                <img src="hb.jpg" alt="Christmas">
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">26 Марта 2023</div>
+            <div class="timeline-content">
+                <p>Я поздравил тебя с др и показал как я блею и это было не специально!</p>
+                <img src="onechip.jpg" alt="Christmas">
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">15 Апреля 2023</div>
+            <div class="timeline-content">
+                <p>Твоя первая вкусная посылка мне</p>
+                <img src="package.jpg" alt="Christmas">
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">19 Декабря по 11 Января 2023-2024</div>
+            <div class="timeline-content">
+                <p>Мы собирали пазлы</p>
+                <p>PS. я не нашел ту самую где мы собирали SPY Family🥺</p>
+                <div class="image-container">
+                    <img src="chain.jpg" alt="Christmas" class="image">
+                    <img src="spy.jpg" alt="Second Image" class="image">
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">25 декабря 2023</div>
+            <div class="timeline-content">
+                <p>Я научился готовить такую красоту для тебя</p>
+                <img src="photo16.jpg" alt="Christmas">
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">26 Декабря 2023</div>
+            <div class="timeline-content">
+                <p>У тебя был выпускной и ты оставила мне такие письма</p>
+                <div class="image-container">
+                    <img src="letter1.jpg" alt="Christmas" class="image">
+                    <img src="letter2.jpg" alt="Second Image" class="image">
+                    <img src="letter3.jpg" alt="THird Image" class="image">
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">11 января 2024 года</div>
+            <div class="timeline-content">
+                <p>Наша крайняя встреча</p>
+                <img src="first.jpg" alt="Christmas">
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">23 Сентября 2024</div>
+            <div class="timeline-content">
+                <p>Теперь осталось зайти только в Summary. Сначала нажми на конверт, а потом включи видео.</p>
+                <div class="diary-entry" style="display: flex; align-items: center;">
+                    <button class="tab-button" onclick="goBackToMain()">Back to Main Page</button>
+                    <span style="margin-left: 10px;">⬅️This button takes you back to the main page.</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <script>
+        // Your JavaScript code goes here
+        function goBackToMain() {
+            // Redirects to the main page without showing the loading screen
+            window.location.href = 'thankyou.html'; // Adjust the URL as needed
+        }
+
+        // JavaScript to hide the loading screen and show the content
+        window.addEventListener('load', function () {
+                setTimeout(function () {
+        document.getElementById('loadingScreen').style.display = 'none'; // Hide the loading screen
+        document.querySelector('.timeline').style.display = 'block'; // Show the timeline content
+    }, 3000); // 3 seconds delay
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video with Interactive Envelope</title>
+    <style>
+        :root {
+            --primary: #fff;
+            --bg-envelope-color: #f5edd1;
+            --envelope-tab: #ecdeb8;
+            --envelope-cover: #e6cfa7;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --txt-color: #444;
+            --heart-color: rgb(252, 8, 231);
+        }
+        body {
+            margin: 0;
+            font-family: 'Nerko One', cursive;
+            background-color: #ffebcc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .video-container {
+            width: 80%;
+            max-width: 700px;
+            margin-bottom: 20px;
+        }
+        .video-container video {
+            width: 100%;
+            border: 5px solid pink;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .envelope-wrapper {
+            width: 700px; /* Increased width */
+            height: 500px; /* Increased height */
+            position: relative;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-envelope-color);
+            border-radius: 0 0 30px 30px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+            z-index: 1;
+        }
+        .envelope::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            z-index: 2;
+            border-top: 220px solid var(--envelope-tab); /* Adjusted for larger size */
+            border-right: 290px solid transparent;
+            border-left: 290px solid transparent;
+            transform-origin: top;
+            transition: all 0.5s ease-in-out;
+        }
+        .envelope::after {
+            content: "";
+            position: absolute;
+            z-index: 2;
+            width: 0;
+            height: 0;
+            border-top: 220px solid transparent;
+            border-right: 290px solid var(--envelope-cover);
+            border-bottom: 160px solid var(--envelope-cover);
+            border-left: 290px solid var(--envelope-cover);
+        }
+        .letter {
+            position: absolute;
+            top: 15%;
+            left: 10%;
+            width: 80%;
+            height: 70%; /* Increased height */
+            background: var(--primary);
+            text-align: left;
+            transition: transform 0.5s ease, font-size 0.5s ease;
+            box-shadow: 0 0 10px var(--shadow-color);
+            padding: 40px; /* Increased padding */
+            font-size: 22px; /* Slightly larger initial font size */
+            transform: scale(0);
+            z-index: 3;
+            color: var(--txt-color);
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+        .envelope.open .letter {
+            transform: scale(1);
+            font-size: 28px; /* Adjusted for larger font size */
+            top: 25%;
+            left: 10%;
+        }
+        .envelope.open::before {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+        .heart {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background-color: var(--heart-color);
+            border-radius: 50%;
+            bottom: 25px;
+            right: 25px;
+            cursor: pointer;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="envelope-wrapper">
+        <div class="envelope">
+            <div class="heart">💙</div> <!-- Blue heart emoji -->
+            <div class="letter">
+                <div class="text">
+                    <strong>Dear Madina.</strong>
+                    <p>
+                        Ты не представляешь.
+                        Как сильно твоя любовь, осветила мою жизнь.
+                        Я хотел создать этот сайт что бы ты лишний раз улыбнулась
+                        и вспомнила, как все у нас было отлично.  
+                        Все что я тут сделал это плод твоих вложений в нас за эти два года.  
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="video-container">
+        <video controls>
+            <source src="together.MOV" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <script>
+
+
+        const envelope = document.querySelector('.envelope-wrapper');
+        envelope.addEventListener('click', () => {
+            envelope.querySelector('.envelope').classList.toggle('open');
+        });
+
+        
+    </script>
+</body>
+</html>

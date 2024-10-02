@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Go on a Date with Me?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nerko+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('together.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Nerko One', cursive;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            max-width: 90%;
+            box-sizing: border-box;
+            backdrop-filter: blur(10px); /* Blur effect */
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #ff6666;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #ff6666;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff4d4d;
+        }
+
+        #noButton {
+            display: none;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+
+        #message {
+            display: none;
+            font-size: 1.25rem;
+            color: #ff6666;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.25rem;
+            }
+
+            button {
+                font-size: 0.9rem;
+            }
+
+            #message {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Would you go on a date with me on 26th September?</h1>
+        <button id="yesButton">Yes</button>
+        <button id="noButton">No</button>
+        <div id="message">Haha, you thought it was going to be that easy?</div>
+    </div>
+
+    <script>
+        const yesButton = document.getElementById('yesButton');
+        const noButton = document.getElementById('noButton');
+        const message = document.getElementById('message');
+
+        function moveNoButton() {
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = noButton.getBoundingClientRect();
+
+            const x = Math.random() * (containerRect.width - buttonRect.width);
+            const y = Math.random() * (containerRect.height - buttonRect.height);
+
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
+        }
+
+        function hideAndShowButton() {
+            setTimeout(() => {
+                noButton.style.display = 'inline-block';
+                moveNoButton();
+            }, Math.random() * 400 + 100); // Random delay between 0.2s and 0.7s
+        }
+
+        window.onload = () => {
+            noButton.style.display = 'inline-block';
+
+            noButton.onmouseover = hideAndShowButton;
+            noButton.onclick = () => {
+                message.style.display = 'block';
+                setTimeout(() => {
+                    message.style.display = 'none';
+                    hideAndShowButton();
+                }, 2000); // Display message for 2 seconds
+            };
+
+            yesButton.onclick = () => {
+                window.location.href = 'thankyou.html'; // Redirect to the thank you page
+            };
+
+            hideAndShowButton(); // Initial call to start the button hiding effect
+        };
+    </script>
+</body>
+</html>

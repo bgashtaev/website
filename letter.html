@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My letter to you, Dumb bitch</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: auto;
+            background-color: #fff7e6; /* Softer light background */
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+        }
+
+        .text-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Ensure it's on top of other elements */
+        }
+
+        .book-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            max-width: 70%; /* Reduced width for the book container */
+            padding: 20px;
+            background-color: #fff; /* White background for the book container */
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 220px auto 40px; /* Center the book container and add margin at the top */
+            position: relative;
+        }
+
+        .page {
+            width: 200px;
+            height: 300px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+            position: relative;
+        }
+
+        .page:hover {
+            transform: scale(1.05);
+        }
+
+        .page img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .modal-content {
+            display: inline-block;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            max-width: 90%;
+        }
+
+        .modal img {
+            max-width: 80vw;
+            max-height: 80vh;
+            border-radius: 5px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 36px;
+            color: #ff4d4d;
+        }
+
+        .modal-prev, .modal-next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            margin-top: -22px;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            transform: translateY(-50%);
+        }
+
+        .modal-prev {
+            left: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .modal-next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .modal-prev:hover, .modal-next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-text {
+            font-size: 18px;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        .audio-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .audio-container audio {
+            width: 100%;
+            max-width: 600px; /* Adjust as needed */
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+                        /* Loading screen styles */
+                        #loadingScreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        z-index: 9999;
+        }
+
+        .heart {
+        font-size: 4rem; /* Adjust size as needed */
+        color: #ff4d4d;
+        animation: pulse 1.5s infinite;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center content horizontally */
+        }
+
+.loading-text {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    color: #ff4d4d;
+    text-align: center; /* Center text horizontally */
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+        .loading-text {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: #ff4d4d;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div id="loadingScreen">
+        <div>
+            <div class="heart">❤️</div>
+            <div class="loading-text">Love letter is loading...</div>
+        </div>
+    </div>
+
+    <div class="text-container">
+        <h2>My letter to you, Dumb bitch</h2>
+        <p>Я отправил на адрес Чалы это письмо 6 сентября</p>
+        <p>Решил, если не получишь его до нашей встречи, оставить его здесь</p>
+        <p>Нажми, на картину чтобы увеличить для комфортного чтения</p>
+    </div>
+
+    <div class="book-container">
+        <div class="page" onclick="openModal(0)">
+            <img src="page1.jpg" alt="Page 1">
+        </div>
+        <div class="page" onclick="openModal(1)">
+            <img src="page2.jpg" alt="Page 2">
+        </div>
+        <div class="page" onclick="openModal(2)">
+            <img src="page3.jpg" alt="Page 3">
+        </div>
+        <!-- Add more pages as needed -->
+    </div>
+
+    <div class="audio-container">
+        <audio controls autoplay>
+            <source src="littledoyouknow.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <span class="modal-prev" onclick="changeSlide(-1)">&#10094;</span>
+            <img id="modalImg" src="" alt="Page">
+            <span class="modal-next" onclick="changeSlide(1)">&#10095;</span>
+            <div id="modalText" class="modal-text"></div>
+        </div>
+    </div>
+
+    <script>
+                    // Hide the loading screen 3 seconds after the page loads
+    window.addEventListener("load", function() {
+        setTimeout(function() {
+            document.getElementById("loadingScreen").style.display = "none";
+        }, 4000); // Wait for 3 seconds
+    });
+
+        let currentIndex = 0;
+        const images = ['page1.jpg', 'page2.jpg', 'page3.jpg']; // Update with your image names
+
+        function openModal(index) {
+            currentIndex = index;
+            const modal = document.getElementById('myModal');
+            const modalImg = document.getElementById('modalImg');
+            const modalText = document.getElementById('modalText');
+            const textContainer = document.querySelector('.text-container'); // Select the text container
+
+            modal.style.display = 'block';
+            modalImg.src = images[currentIndex];
+            modalText.textContent = `Page ${currentIndex + 1}`; // Update with appropriate text
+            
+            textContainer.style.display = 'none'; // Hide the text container when modal opens
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('myModal');
+            const textContainer = document.querySelector('.text-container'); // Select the text container
+
+            modal.style.display = 'none';
+            textContainer.style.display = 'block'; // Show the text container again when modal closes
+        }
+
+        function changeSlide(direction) {
+            currentIndex = (currentIndex + direction + images.length) % images.length;
+            updateModal();
+        }
+
+        function updateModal() {
+            const modalImg = document.getElementById('modalImg');
+            const modalText = document.getElementById('modalText');
+            modalImg.src = images[currentIndex];
+            modalText.textContent = `This is the content for page ${currentIndex + 1}`; // Update with appropriate text
+        }
+
+        // Show the initial slide
+        updateModal();
+
+        // Your JavaScript code goes here
+        function goBackToMain() {
+        // Redirects to the main page without showing the loading screen
+            window.location.href = 'thankyou.html'; // Adjust the URL as needed
+        }
+    </script>
+</body>
+</html>

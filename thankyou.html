@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You and Optional Quiz!</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: auto;
+            background-color: #fff7e6; /* Softer light background */
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            flex-direction: column;
+            background-color: #fff7e6;
+        }
+
+        .loading p {
+            font-size: 24px;
+            color: #ff4d4d;
+            margin: 20px;
+        }
+
+        .heart {
+            font-size: 48px;
+            color: #ff4d4d;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        .hand {
+            position: absolute;
+            width: 120px;
+            height: auto;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 3;
+        }
+
+        .left-hand {
+            left: -150px;
+            animation: moveHandLeft 3s ease-in-out forwards;
+        }
+
+        .right-hand {
+            right: -150px;
+            animation: moveHandRight 3s ease-in-out forwards;
+        }
+
+        @keyframes moveHandLeft {
+            from {
+                left: -150px;
+            }
+            to {
+                left: calc(50% - 60px);
+            }
+        }
+
+        @keyframes moveHandRight {
+            from {
+                right: -150px;
+            }
+            to {
+                right: calc(50% - 60px);
+            }
+        }
+
+        .content {
+            display: none;
+            padding: 20px;
+            background-color: #fff7e6;
+        }
+
+        .message {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin: 20px auto;
+            max-width: 700px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        h1 {
+            color: #4caf50;
+        }
+
+        .gif {
+            margin-top: 20px;
+            width: 200px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .button-container button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container button:hover {
+            background-color: #e33e3e;
+            transform: scale(1.05);
+        }
+
+        .button-container button:active {
+            transform: scale(1);
+        }
+
+        .info-text {
+            font-size: 16px;
+            color: #555;
+            margin-top: 30px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .heart-fall {
+            position: absolute;
+            top: -50px;
+            font-size: 24px;
+            color: #ff4d4d;
+            animation: fall 7s infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -50px;
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: translateX(20px) scale(1.5);
+            }
+            100% {
+                top: 100vh;
+                opacity: 0;
+                transform: translateX(-20px) scale(1.2);
+            }
+        }
+
+        .heart-fall:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .heart-fall:nth-child(2) { left: 20%; animation-delay: 0.5s; }
+        .heart-fall:nth-child(3) { left: 30%; animation-delay: 1s; }
+        .heart-fall:nth-child(4) { left: 40%; animation-delay: 1.5s; }
+        .heart-fall:nth-child(5) { left: 50%; animation-delay: 2s; }
+        .heart-fall:nth-child(6) { left: 60%; animation-delay: 2.5s; }
+        .heart-fall:nth-child(7) { left: 70%; animation-delay: 3s; }
+        .heart-fall:nth-child(8) { left: 80%; animation-delay: 3.5s; }
+        .heart-fall:nth-child(9) { left: 90%; animation-delay: 4s; }
+        .heart-fall:nth-child(10) { left: 100%; animation-delay: 4.5s; }
+
+        #memory-container {
+            margin-top: 30px;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #letter-container {
+    margin-top: 30px;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#letter-container button {
+    margin-top: 15px;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: #ff69b4; /* Same background color as #generate-btn */
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#letter-container button:hover {
+    background-color: #e554a0; /* Same hover effect */
+    transform: scale(1.05);
+}
+
+#letter-container button:focus {
+    outline: none; /* Remove outline on focus */
+}
+
+#letter-container button:active {
+    transform: scale(1); /* Active state for button */
+}
+
+
+
+        #generate-btn {
+            margin-top: 15px;
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            background-color: #ff69b4;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        #generate-btn:hover {
+            background-color: #e554a0;
+            transform: scale(1.05);
+        }
+
+        #generate-btn:active {
+            transform: scale(1);
+        }
+
+        .heart-image {
+             width: 50px; /* Adjust size as needed */
+             height: 50px; /* Adjust size as needed */
+             position: absolute;
+             left: 50%;
+             top: 50%;
+             transform: translate(-50%, -50%);
+        }
+
+    
+    </style>
+</head>
+<body>
+        <div class="loading">
+            <img src="handM.png" alt="Left Hand" class="hand left-hand">
+            <img src="handB.png" alt="Right Hand" class="hand right-hand">
+            <div class="heart">💙</div>
+            <p>Love is loading...</p>
+        </div>
+
+
+        <div class="message">
+            <h1>Я знал что ты согласишься! 😊</h1>
+            <p>I’m really excited for our meeting!</p>
+            <audio controls autoplay loop>
+                <source src="donderry.ogg" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <img src="https://i.postimg.cc/gk9rVp3k/celebration-gif.gif" alt="Sample GIF" class="gif">
+            <div class="button-container">
+                <button onclick="window.location.href = 'fun-quiz.html'">Fun Quiz</button>
+                <button onclick="window.open('wheel-of-love.html', '_blank')">20 Facts</button>
+                <button onclick="window.open('slideshow.html', '_blank')">Back to Happiness</button>
+                <button onclick="window.location.href = 'song-memories.html'">True Conversation</button>
+                <button onclick="window.open('letter.html', '_blank')">Letter</button>
+                <button onclick="window.location.href = 'ourjorney.html'">Our Journey</button>
+                <button onclick="window.open('Summary.html', '_blank')">Summary</button>
+                <button onclick="window.open('https://bgashtaev.github.io/date26/', '_blank')">26 September</button>
+            </div>
+
+
+            <div id="memory-container">
+                <p id="memory-text">Click the button to generate a random memory.</p>
+                <button id="generate-btn">Past Memories</button>
+            </div>
+
+            <div id="letter-container">
+                <p id="letter-text">Click the button to leave a message</p>
+                <button onclick="window.open('https://bgashtaev.github.io/letters/', '_blank')">View Messages</button>
+            </div>
+
+            <div class="info-text">
+                <p>Feel free to click on any button.
+            </div>
+        </div>
+
+
+        <div class="content">
+            <div class="message">
+                <h1>"Твое Имя"2016</h1>
+                <p>Нити сплетаются и обретают форму.</p>
+                <p>Скручиваются, перепутываются, порой распутываются, рвутся,</p>
+                <p>Но потом сплетаются вновь. Это - Мусуби, плетение узлов.</p>
+                <p>Это - само время.</p>
+                <img src="heart.jpg" alt="Description of Image" class="my-image">
+            </div>
+
+
+        <!-- Falling hearts -->
+        <div class="heart-fall">💙</div>
+        <div class="heart-fall">💙</div>
+        <div class="heart-fall">💙</div>
+        <div class="heart-fall">💙</div>
+        <div class="heart-fall">💙</div>
+        <div class="heart-fall">💙</div>
+        <div class="heart-fall">💙</div>
+        <div class="heart-fall">💙</div>
+        <div class="heart-fall">💙</div>
+        <div class="heart-fall">💙</div>
+        <div class="heart-fall">💙</div>
+        <div class="heart-fall">💙</div>
+        <div class="heart-fall">💙</div>
+        <div class="heart-fall">💙</div>
+        <div class="heart-fall">💙</div>
+    </div>
+
+    <script>
+        // JavaScript to hide the loading screen and show the content
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                document.querySelector('.loading').style.display = 'none';
+                document.querySelector('.content').style.display = 'block';
+            }, 3000); // 3 seconds delay
+        });
+
+        // JavaScript for Random Memory Generator
+        const memories = [
+    "23 сентября 2022 года мы начали встречаться",
+    "6 февраля 2023 года я написал тебе 20 фактов, которые я люблю в тебе",
+    "19 декабря 2023 года мы впервые обрели друг друга вживую",
+    "5 января 2023 года мы зарегистрировали свой брак онлайн",
+    "25 декабря 2023 года я впервые тебе приготовил вкусненькое",
+    "В один из дней в Дубае, я ходил по ДубайМоллу в одних носках, а потом на спине нес тебя до дома",
+    "Я тебя нес на спине до общаги",
+    "У нас с тобой был марафон по Гарри Поттеру",
+    "Мы всегда отдыхали на той скамейке",
+    "GIF спокойной ночи в Whatsup перед сном",
+    "Наше первое аниме Твое Имя",
+    "6 января 2024 года ты заказала мне биг тейсти когда мне было одиноко без тебя",
+    "Как ты меня учила умываться",
+    "Мне нравилось ходить с тобой за руку всегда",
+    "Так было классно целовать твои руку, за которую держался"
+];
+
+document.getElementById('generate-btn').addEventListener('click', function() {
+    const randomIndex = Math.floor(Math.random() * memories.length);
+    document.getElementById('memory-text').textContent = memories[randomIndex];
+});
+
+        document.getElementById('generate-btn').addEventListener('click', function() {
+            const randomIndex = Math.floor(Math.random() * memories.length);
+            document.getElementById('memory-text').textContent = memories[randomIndex];
+        });
+    </script>
+</body>
+</html>
