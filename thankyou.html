@@ -303,24 +303,25 @@
             font-weight: bold;
             color: #333;
         }
-        .styled-button {
-    background-color: #ff4d4d; /* Same background color */
-    color: white;
-    border: none;
-    border-radius: 15px;
+#timeElapsed button {
+    margin-top: 15px;
     padding: 12px 24px;
     font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: #ff69b4; /* Same background color */
+    color: white;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
 }
 
-.styled-button:hover {
-    background-color: #e33e3e; /* Same hover effect */
+#timeElapsed button:hover {
+    background-color: #e554a0; /* Hover effect */
     transform: scale(1.05);
 }
 
-.styled-button:active {
+#timeElapsed button:active {
     transform: scale(1); /* Active state for button */
 }
 
@@ -334,11 +335,13 @@
             <div class="heart">💙</div>
             <p>Love is loading...</p>
         </div>
-            <div class="timer">
-            <h2>Сколько времени прошло с нашей последней встречи:</h2>
-            <button onclick="window.open('https://bgashtaev.github.io/da/', '_blank')">26 September</button>
-                <img src="https://i.postimg.cc/j5rCLf8c/cute-cats-cuddle.gif" alt="Fun GIF" class="gif">
-            <p id="timeElapsed"></p>
+<div class="timer">
+    <h2>Сколько времени прошло с нашей последней встречи:</h2>
+    <button class="styled-button" onclick="window.open('https://bgashtaev.github.io/da/', '_blank')">26 September</button>
+    <img src="https://i.postimg.cc/j5rCLf8c/cute-cats-cuddle.gif" alt="Fun GIF" class="gif">
+    <p id="timeElapsed"></p>
+</div>
+
         </div>
 
         <div class="message">
