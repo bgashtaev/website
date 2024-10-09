@@ -21,36 +21,74 @@
 
         .container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
-            padding: 20px;
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 30px;
+            border-radius: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             position: relative;
             max-width: 90%;
             box-sizing: border-box;
-            backdrop-filter: blur(10px); /* Blur effect */
+            backdrop-filter: blur(10px);
         }
 
         h1 {
-            font-size: 1.5rem;
+            font-size: 2.2rem;
             margin-bottom: 20px;
             color: #ff6666;
         }
 
         button {
-            padding: 10px 20px;
-            font-size: 1rem;
+            padding: 15px 30px;
+            font-size: 1.2rem;
             margin: 5px;
             cursor: pointer;
             background-color: #ff6666;
             color: white;
             border: none;
             border-radius: 5px;
-            transition: all 0.3s ease;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            position: relative;
         }
 
-        button:hover {
-            background-color: #ff4d4d;
+        #yesButton:hover {
+            background-color: white;
+            color: #ff6666;
+        }
+
+        .heart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0; /* Set to 0 initially */
+            transition: opacity 0.5s ease;
+        }
+
+        .heart {
+            font-size: 1rem; /* Default size */
+            animation: float 2s ease-in-out infinite;
+            opacity: 0;
+            animation-delay: var(--delay);
+            transition: opacity 0.5s ease;
+        }
+
+        #yesButton:hover .heart-container {
+            opacity: 1; /* Make hearts visible on hover */
+        }
+
+        #yesButton:hover .heart {
+            opacity: 1; /* Make hearts visible on hover */
+        }
+
+        /* Heart floating animation */
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
         }
 
         #noButton {
@@ -72,11 +110,12 @@
             }
 
             h1 {
-                font-size: 1.25rem;
+                font-size: 1rem;
             }
 
             button {
-                font-size: 0.9rem;
+                font-size: 1rem;
+                padding: 12px 24px;
             }
 
             #message {
@@ -88,7 +127,15 @@
 <body>
     <div class="container">
         <h1>Would you go on a date with me on 26th September?</h1>
-        <button id="yesButton">Yes</button>
+        <button id="yesButton">
+            Yes
+            <div class="heart-container">
+                <span class="heart" style="font-size: 1.2rem; --delay: 0s;">💖</span>
+                <span class="heart" style="font-size: 1.5rem; --delay: 0.2s;">💖</span>
+                <span class="heart" style="font-size: 1rem; --delay: 0.4s;">💖</span>
+                <span class="heart" style="font-size: 1.8rem; --delay: 0.6s;">💖</span>
+            </div>
+        </button>
         <button id="noButton">No</button>
         <div id="message">Haha, you thought it was going to be that easy?</div>
     </div>
@@ -114,7 +161,7 @@
             setTimeout(() => {
                 noButton.style.display = 'inline-block';
                 moveNoButton();
-            }, Math.random() * 400 + 100); // Random delay between 0.2s and 0.7s
+            }, Math.random() * 400 + 100);
         }
 
         window.onload = () => {
@@ -126,14 +173,14 @@
                 setTimeout(() => {
                     message.style.display = 'none';
                     hideAndShowButton();
-                }, 2000); // Display message for 2 seconds
+                }, 2000);
             };
 
             yesButton.onclick = () => {
-                window.location.href = 'thankyou.html'; // Redirect to the thank you page
+                window.location.href = 'thankyou.html';
             };
 
-            hideAndShowButton(); // Initial call to start the button hiding effect
+            hideAndShowButton();
         };
     </script>
 </body>
