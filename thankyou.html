@@ -280,6 +280,29 @@
              top: 50%;
              transform: translate(-50%, -50%);
         }
+                .timer {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .timer:hover {
+            transform: scale(1.05);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        #timeElapsed {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
 
     
     </style>
@@ -291,7 +314,10 @@
             <div class="heart">💙</div>
             <p>Love is loading...</p>
         </div>
-
+            <div class="timer">
+            <h2>Сколько времени прошло с нашей последней встречи:</h2>
+            <p id="timeElapsed"></p>
+        </div>
 
         <div class="message">
             <h1>Я знал что ты согласишься! 😊</h1>
@@ -395,6 +421,26 @@ document.getElementById('generate-btn').addEventListener('click', function() {
             const randomIndex = Math.floor(Math.random() * memories.length);
             document.getElementById('memory-text').textContent = memories[randomIndex];
         });
+
+                    // Set the target date
+    const targetDate = new Date('2024-09-26T15:00:00'); // Change this to your target date
+    const updateTimeElapsed = () => {
+        const now = new Date();
+        const timeDifference = now - targetDate; // Difference in milliseconds
+
+        // Calculate time components
+        const seconds = Math.floor((timeDifference / 1000) % 60);
+        const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+        const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+        // Update the display
+        document.getElementById('timeElapsed').innerText = 
+            `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+    };
+
+    // Update the timer every second
+    setInterval(updateTimeElapsed, 1000);
     </script>
 </body>
 </html>
